@@ -38,7 +38,7 @@ export default function ProductDetail({productData}){
                             <Link href="/">
                                 <a className="p-2 m-1 rounded-md bg-blue-400 hover:bg-blue-600 shadow-md text-white">Back</a>
                             </Link>
-                            <button onClick={buyProduct(productData.Id)} className="w-full p-2 m-1 shadow-md rounded-md border-teal-500 bg-teal-400 hover:bg-teal-600 text-white"> Buy</button>
+                            <button className="w-full p-2 m-1 shadow-md rounded-md border-teal-500 bg-teal-400 hover:bg-teal-600 text-white"> Buy</button>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Layout from "../components/Layout";
 import { addDots } from "../components/ProductCard";
-
+import balance from "../components/Balance";
 export default function Balance(){
     
     return(
@@ -36,7 +36,7 @@ export default function Balance(){
                         <br/>
                         <input name="amountDeposit" className="border rounded-md" type="number"></input>
                         <br/>
-                        <button onClick={addBalance} className="p-2 mt-2 rounded-md border-teal-500 bg-teal-400 hover:bg-teal-600 text-white shadow-md">Deposit</button>
+                        <button className="p-2 mt-2 rounded-md border-teal-500 bg-teal-400 hover:bg-teal-600 text-white shadow-md">Deposit</button>
                     </form>
                 </div>
             </div>
