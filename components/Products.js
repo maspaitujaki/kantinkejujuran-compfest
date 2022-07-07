@@ -4,7 +4,7 @@ const products = [
       Name: "Momogi Jagung Bakar",
       Price: 2000,
       Desc: "Makin lama makin kecil",
-      ImgUrl: "/images/momogi.jpg",
+      ImgUrl: "momogi.jpg",
       Date: Date()
     },
     {
@@ -12,7 +12,7 @@ const products = [
       Name: "Teh Gelas",
       Price: 1000,
       Desc: "Ini teh gelas rasanya sangat manis",
-      ImgUrl: "/images/teh_gelas.jpg",
+      ImgUrl: "teh_gelas.jpg",
       Date: Date()
     },
     {
@@ -20,7 +20,23 @@ const products = [
       Name: "Astor",
       Price: 7000,
       Desc: "Kasta teratas wafer stik coklat",
-      ImgUrl: "/images/astor.jpg",
+      ImgUrl: "astor.jpg",
+      Date: Date()
+    },
+    {
+      Id : 4,
+      Name: "Astor",
+      Price: 7000,
+      Desc: "Kasta teratas wafer stik coklat",
+      ImgUrl: "astor.jpg",
+      Date: Date()
+    },
+    {
+      Id : 5,
+      Name: "Astor",
+      Price: 7000,
+      Desc: "Kasta teratas wafer stik coklat",
+      ImgUrl: "astor.jpg",
       Date: Date()
     },
 ]

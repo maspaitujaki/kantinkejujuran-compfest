@@ -27,15 +27,18 @@ export function addDots(nStr) {
 export default function ProductCard({product}){
 
     return(
-        <Link href={"/product/" + product.Id.toString()}>
-            <a className="bg-gray-100 max-w-sm rounded overflow-hidden shadow-xl hover:shadow-2xl">
+        <Link href={"/product/" + product.id.toString()}>
+            <a className="bg-gray-200 max-w-sm rounded overflow-hidden shadow-xl hover:shadow-2xl">
                 <div className="">
-                    <Image className="w-full" width={200} height={200} layout="responsive" src={product.ImgUrl} alt="" />
+                    <Image className="w-full" width={200} height={200} layout="responsive" src={"/images/"+product.image} alt="" />
                 </div>
                 <hr/>
                 <div className="p-2">
-                    <p className="text-sm text-teal-900 truncate">{product.Name}</p>
-                    <p className="text-lg text-teal-800 font-bold truncate">Rp {addDots(product.Price)}</p>
+                    <p className="text-sm text-teal-900 truncate">{product.name}</p>
+                    <p className="text-lg text-teal-800 font-bold truncate">Rp {addDots(product.price)}</p>
+                    <p className="text-sm text-gray-400">
+                                Added:{formatDate(new Date(product.date))}
+                    </p>
                 </div>
             </a>
         </Link>
