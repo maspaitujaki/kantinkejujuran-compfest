@@ -1,5 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import React from "react";
+import axios from 'axios';
+import url from "../config/url";
 
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
@@ -25,12 +28,32 @@ export function addDots(nStr) {
 }
 
 export default function ProductCard({product}){
+    const [img, setImg] = React.useState("");
+
+    React.useEffect(() => {
+        axios
+            .get(url+"/img/product/"+product.id,{
+                responseType : "arraybuffer"
+            })
+            .then(res => {
+                const imageBlob = new Blob([res.data])
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                setImg(imageObjectURL);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    },[product])
+    
 
     return(
         <Link href={"/product/" + product.id.toString()}>
             <a className="bg-gray-200 max-w-sm rounded overflow-hidden shadow-xl hover:shadow-2xl">
                 <div className="">
-                    <Image className="w-full" width={200} height={200} layout="responsive" src={"/images/"+product.image} alt="" />
+                    {
+                        img &&
+                        <Image className="w-full" width={200} height={200} layout="responsive" src={img} alt="" />
+                        }
                 </div>
                 <hr/>
                 <div className="p-2">

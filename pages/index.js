@@ -15,15 +15,37 @@ export function getAllProduct({}){
   })
 }
 
-// export function getProductById(id){
-//   const selectedProduct = products.filter((product) => product.Id.toString() === id)[0]
-//   console.log(selectedProduct)
-//   return{
-//     ...selectedProduct
-//   }
-// }
+function alphabeticalOrder(arr) {
+  return arr.sort((a, b) => a.name < b.name ? -1 : 1)
+}
 
-export default function Home({products}) {
+export default function Home(props) {
+  const [sortBy, setSortBy] = React.useState("date")
+  const [products, setProducts] = React.useState(props.products)
+
+  React.useEffect(() => {
+    const copy = [...props.products]
+    if(sortBy === "name"){
+      const sortedProducts = alphabeticalOrder(copy)
+      setProducts(sortedProducts)
+    } else if (sortBy === "date") {
+      setProducts(copy.sort((a, b) => {
+        return new Date(b.Date) - new Date(a.Date)
+      }))
+    }
+  }, [sortBy, props.products])
+
+  function changeSortBy(event){
+    const radioButtons = document.querySelectorAll('input[name="sortBy"]');
+    for (const radioButton of radioButtons) {
+      if (radioButton.checked) {
+        setSortBy(radioButton.value)
+        break;
+      }
+    }
+  }
+  
+
   return (
     <div>
       <Head>
@@ -43,8 +65,8 @@ export default function Home({products}) {
             <div className='mr-2'>
               <div className='bg-gray-200 rounded-md shadow-sm p-1 pr-4'>
               <p className='text-teal-800 text-md font-semibold'>Sort By</p>
-              <input type="radio" name="sortBy" value="name"/> <span className='text-teal-800 font-semibold'>Name</span><br/>
-              <input type="radio" name="sortBy" value="date"/> <span className='text-teal-800 font-semibold'>Date</span><br/>
+              <input onClick={changeSortBy} type="radio" name="sortBy" value="name"/> <span className='text-teal-800 font-semibold'>Name</span><br/>
+              <input onClick={changeSortBy} type="radio" name="sortBy" value="date"/> <span className='text-teal-800 font-semibold'>Date</span><br/>
               </div>
             </div>
             <div className='flex-1 grid grid-cols-4 gap-2'>

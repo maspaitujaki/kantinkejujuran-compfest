@@ -6,20 +6,19 @@ import { addDots } from "../components/ProductCard";
 import url from "../config/url";
 import React from "react";
 
-
-
-
-
-
 export default function Balance({balance}){
     const [storeBalance, setStoreBalance] = React.useState(balance)
-    const [danger, setDanger] = React.useState(false)
+    const [danger, setDanger] = React.useState("")
 
     async function withdraw(event){
         event.preventDefault()
-        const amt = parseInt(document.getElementById("amountWithdraw").value)
+        const amt = Math.abs(parseInt(document.getElementById("amountWithdraw").value))
+        if (isNaN(amt)){
+            setDanger("Amount must be a number")
+            return
+        }
         if(amt > storeBalance){
-            setDanger(true)
+            setDanger("Amount must be less than balance")
             return
         }
         await axios(
@@ -45,10 +44,11 @@ export default function Balance({balance}){
 
     async function deposit(event){
         event.preventDefault()
-        const amt = parseInt(document.getElementById("amountDeposit").value)
-        console.log("storeBalance", storeBalance)
-        console.log("amount",amt)
-        console.log("assert", storeBalance+amt)
+        const amt = Math.abs(parseInt(document.getElementById("amountDeposit").value))
+        if (isNaN(amt)){
+            setDanger("Amount must be a number")
+            return
+        }
         await axios(
             {
                 method: 'POST',
@@ -62,7 +62,6 @@ export default function Balance({balance}){
             }
             )
             .then(res => {
-                console.log("res", res)
                 setStoreBalance(res.data.amount)
             })
             .catch(err => {
@@ -87,21 +86,18 @@ export default function Balance({balance}){
                     <p className="font-bold text-3xl text-teal-900">
                         Rp{addDots(storeBalance)}
                     </p>
-                    <form className="mt-3">
+                    <p className="text-red-700">{danger}</p>
+                    <form className="mt-1">
                         <label className='font-medium text-lg text-teal-800' htmlFor="amountWithdraw">Insert amount to withdraw</label>
                         <br/>
-                        <input id="amountWithdraw" name="amountWithdraw" className="border rounded-md" type="number"></input>
+                        <input id="amountWithdraw" name="amountWithdraw" className="border rounded-md" type="number" min={0}></input>
                         <br/>
-                        {
-                            danger &&
-                            <p className="text-red-700">Amount must lower than balance!</p>
-                        }
-                        <button onClick={withdraw} className="p-2 mt-2 rounded-md border-teal-500 bg-teal-400 hover:bg-teal-600 text-white shadow-md"> Withdraw</button>
+                        <button onClick={withdraw} className="p-2 mt-2 rounded-md border-teal-500 bg-teal-400 hover:bg-teal-600 text-white shadow-md">Withdraw</button>
                     </form>
                     <form className="mt-3">
                         <label className='font-medium text-lg text-teal-800' htmlFor="amountDeposit">Insert amount to deposit</label>
                         <br/>
-                        <input id="amountDeposit" name="amountDeposit" className="border rounded-md" type="number"></input>
+                        <input id="amountDeposit" name="amountDeposit" className="border rounded-md" type="number" min={0}></input>
                         <br/>
                         <button onClick={deposit} className="p-2 mt-2 rounded-md border-teal-500 bg-teal-400 hover:bg-teal-600 text-white shadow-md">Deposit</button>
                     </form>
