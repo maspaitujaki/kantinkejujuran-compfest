@@ -124,44 +124,46 @@ export default function ProductDetail({productData}){
     )
 }
 
-export async function getStaticPaths(){
-    let products
-    await axios(
-        {
-            method: 'GET',
-            url: url+'/pid/',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-        )
-        .then(res => {
-            products = res.data
-        })
-        .catch(err => {
+// export async function getStaticPaths(){
+//     let products
+//     await axios(
+//         {
+//             method: 'GET',
+//             url: url+'/pid/',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         }
+//         )
+//         .then(res => {
+//             products = res.data
+//         })
+//         .catch(err => {
 
-        });
+//         });
         
-    const paths = products.map((product)=> {
-        return {
-          params: {
-            id: product.id
-          }
-        }
-      })
-    return {
-        paths,
-        fallback: false
-    }
-}
+//     const paths = products.map((product)=> {
+//         return {
+//           params: {
+//             id: product.id
+//           }
+//         }
+//       })
+//     return {
+//         paths,
+//         fallback: false
+//     }
+// }
 
-export async function getServerSideProps({params}){
+export async function getServerSideProps(context){
     // const productData = getProductById(params.id);
+    const { id } = context.query;
+    
     let productData
     await axios(
         {
             method: 'GET',
-            url: url+'/product/'+params.id,
+            url: url+'/product/'+id,
             headers: {
                 'Content-Type': 'application/json'
             }
