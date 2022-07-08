@@ -155,7 +155,7 @@ export async function getStaticPaths(){
     }
 }
 
-export async function getStaticProps({params}){
+export async function getServerSideProps({params}){
     // const productData = getProductById(params.id);
     let productData
     await axios(

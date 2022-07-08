@@ -108,7 +108,7 @@ export default function Balance({balance}){
 }
 
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     let balance = undefined;
     await axios(
             {
