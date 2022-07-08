@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 
 export default function ProductDetail({productData}){
     const [img,setImg] = React.useState("");
+    const [loading, setLoading] = React.useState(false);
     const router = useRouter();
 
     React.useEffect(() => {
@@ -31,13 +32,14 @@ export default function ProductDetail({productData}){
 
     async function buyProduct(event){
         event.preventDefault()
+        setLoading(true)
 
         await axios.delete(url+"/product/"+productData.id,{
             headers:{
                 'Content-Type': 'application/json'
             }
         }).then(res => {
-            deleteProductSuccess = true
+            setLoading(false)
             router.push("/")
         }).catch(err => {
             
@@ -75,7 +77,7 @@ export default function ProductDetail({productData}){
                             <Link href="/">
                                 <a className="p-2 m-1 rounded-md bg-blue-400 hover:bg-blue-600 shadow-md text-white">Back</a>
                             </Link>
-                            <button onClick={buyProduct} className="w-full p-2 m-1 shadow-md rounded-md border-teal-500 bg-teal-400 hover:bg-teal-600 text-white">Buy</button>
+                            <button onClick={buyProduct} className="w-full p-2 m-1 shadow-md rounded-md border-teal-500 bg-teal-400 hover:bg-teal-600 text-white">{loading?"Please Wait": "Buy"}</button>
                         </div>
                     </div>
                 </div>
