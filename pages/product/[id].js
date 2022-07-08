@@ -31,29 +31,7 @@ export default function ProductDetail({productData}){
 
     async function buyProduct(event){
         event.preventDefault()
-        let addBalanceSuccess = false
-        await axios(
-            {
-                method: "POST",
-                url: url+"/balance/add",
-                data: {
-                    amount: productData.price
-                },
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-            ).then(res => {
-                addBalanceSuccess = true
-            }).catch(err => {
-                addBalanceSuccess = false
-            })
 
-        if(!addBalanceSuccess){
-            return
-        }
-
-        let deleteProductSuccess = false
         await axios.delete(url+"/product/"+productData.id,{
             headers:{
                 'Content-Type': 'application/json'
@@ -64,24 +42,6 @@ export default function ProductDetail({productData}){
         }).catch(err => {
             
         })
-        if(!deleteProductSuccess){
-            await axios.post(
-                url+"/balance/substract",
-                {
-                    amount: productData.price
-                },
-                {
-                    headers:{
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(res => {
-                })
-                .catch(err => {
-                    console.log(err)
-                }
-            )
-        }
     }
 
     return(
